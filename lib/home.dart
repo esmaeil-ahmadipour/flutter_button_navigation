@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+enum TabItem { red, green, blue }
 
 
 class MyHomePage extends StatefulWidget {
@@ -11,38 +12,42 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  TabItem currentTab = TabItem.red;
 
-  void _incrementCounter() {
+  void _selectTab(TabItem tabItem) {
     setState(() {
-      _counter++;
+      currentTab = tabItem;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+      body: buildBody(context),
+      bottomNavigationBar: BottomNavigation(
+        currentTab: currentTab,
+        onSelectTab: _selectTab,
+        items: <BottomNavigationBarItem>[],
+
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: (){},
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  Widget buildBody(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        _buildOffstageNavigator(),
+      ],
+    );
+  }
+
+  _buildOffstageNavigator() {
+
   }
 }
